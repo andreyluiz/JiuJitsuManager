@@ -1,6 +1,6 @@
 package br.com.jiujitsu.manager.controller.database;
 
-import br.com.jiujitsu.manager.controller.config.Configuration;
+import br.com.jiujitsu.manager.controller.config.ConfigurationManager;
 import com.db4o.ObjectContainer;
 import java.util.List;
 
@@ -12,11 +12,11 @@ public abstract class DataManager {
 
     protected ObjectContainer db;
     protected String DB_DIR;
-    protected Configuration config;
+    protected ConfigurationManager config;
     protected static final String DATA_DB = "data";
     
     public DataManager() {
-        config = new Configuration();
+        config = new ConfigurationManager();
         DB_DIR = config.getDatabaseDir();
     }
     
