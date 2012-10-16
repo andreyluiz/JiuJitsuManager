@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author pc
+ * @author Andrey Luiz
  */
 public class AtletasTableModel extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
@@ -14,7 +14,7 @@ public class AtletasTableModel extends AbstractTableModel {
     private List<AtletaModel> linhas;
     
     private String[] colunas = new String[]{
-        "ID", "Nome", "Sexo", "Faixa", "Cat. Idade", "Cat. Peso"
+        "", "ID", "Nome", "Sexo", "Faixa", "Cat. Idade", "Cat. Peso"
     };
 
     public AtletasTableModel() {
@@ -41,8 +41,12 @@ public class AtletasTableModel extends AbstractTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return String.class;
+    public Class getColumnClass(int columnIndex) {
+        Class klass = String.class;
+        if (columnIndex == 0) {
+            klass = Boolean.class;
+        }
+        return klass;
     }
 
     @Override
@@ -51,16 +55,18 @@ public class AtletasTableModel extends AbstractTableModel {
        
         switch (columnIndex) {
             case 0:
-                return atleta.getId();
+                return atleta.isMarcado();
             case 1:
-                return atleta.getNome();
+                return atleta.getId();
             case 2:
-                return atleta.getSexo();
+                return atleta.getNome();
             case 3:
-                return atleta.getFaixa();
+                return atleta.getSexo() == 'M' ? "Masculino" : "Feminino";
             case 4:
-                return atleta.getCategoria_idade();
+                return atleta.getFaixa();
             case 5:
+                return atleta.getCategoria_idade();
+            case 6:
                 return atleta.getCategoria_peso();
             default:
                 throw new IndexOutOfBoundsException("Coluna inexistente.");
@@ -73,16 +79,18 @@ public class AtletasTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                item.setId(Integer.valueOf(aValue.toString()));
+                item.setMarcado(Boolean.valueOf(aValue.toString()));
             case 1:
-                item.setNome(aValue.toString());
+                item.setId(Integer.valueOf(aValue.toString()));
             case 2:
-                item.setSexo(aValue.toString().charAt(0));
+                item.setNome(aValue.toString());
             case 3:
-                item.setFaixa(aValue.toString());
+                item.setSexo(aValue.toString().charAt(0));
             case 4:
-                item.setCategoria_idade(aValue.toString());
+                item.setFaixa(aValue.toString());
             case 5:
+                item.setCategoria_idade(aValue.toString());
+            case 6:
                 item.setCategoria_peso(aValue.toString());            
             default:
         }
@@ -94,6 +102,7 @@ public class AtletasTableModel extends AbstractTableModel {
 
 //      "ID", "Nome", "Sexo", "Faixa", "Cat. Idade", "Cat. Peso"
         
+        atleta.setMarcado(aValue.isMarcado());
         atleta.setId(aValue.getId());
         atleta.setNome(aValue.getNome());
         atleta.setSexo(aValue.getSexo());
@@ -106,14 +115,18 @@ public class AtletasTableModel extends AbstractTableModel {
         fireTableCellUpdated(rowIndex, 2);
         fireTableCellUpdated(rowIndex, 3);
         fireTableCellUpdated(rowIndex, 4);
-        fireTableCellUpdated(rowIndex, 5);        
+        fireTableCellUpdated(rowIndex, 5);
+        fireTableCellUpdated(rowIndex, 6);
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
+        if (columnIndex == 0) {
+            return true;
+        }
         return false;
     }
-
+    
     public AtletaModel getAtleta(int indiceLinha) {
         return linhas.get(indiceLinha);
     }

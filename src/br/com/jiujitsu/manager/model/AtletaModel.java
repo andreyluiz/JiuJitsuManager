@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class AtletaModel {
     
+    private boolean marcado;
     private long id;
     private String nome;
     private Date data_nasc;
@@ -23,7 +24,21 @@ public class AtletaModel {
     public AtletaModel() {}
     
     public AtletaModel(long id) {
-        this.id = id;
+        this.id = id;        
+    }
+
+    /**
+     * @return the marcado
+     */
+    public boolean isMarcado() {
+        return marcado;
+    }
+
+    /**
+     * @param marcado the marcado to set
+     */
+    public void setMarcado(boolean marcado) {
+        this.marcado = marcado;
     }
     
     /**

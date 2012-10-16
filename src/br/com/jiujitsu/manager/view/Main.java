@@ -1,30 +1,22 @@
 package br.com.jiujitsu.manager.view;
 
-import br.com.jiujitsu.manager.controller.database.AtletasDataManager;
-import br.com.jiujitsu.manager.model.AtletaModel;
-import br.com.jiujitsu.manager.model.AtletasTableModel;
-import java.awt.Component;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.ToolTipManager;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Andrey Luiz
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends JFrame {
     
-    private boolean editing;
-    private AtletasTableModel model = new AtletasTableModel();
+    protected boolean editing;
+    private Cadastro cadastro = new Cadastro(this);
     
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        this.preConfigure();
+        preConfigure();       
     }
             
     /**
@@ -35,7 +27,6 @@ public class Main extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
@@ -47,43 +38,6 @@ public class Main extends javax.swing.JFrame {
         buttonExcluir = new javax.swing.JButton();
         tabPanels = new javax.swing.JTabbedPane();
         tabCadastro = new javax.swing.JPanel();
-        tabCadastro1 = new javax.swing.JTabbedPane();
-        panelPesquisa = new javax.swing.JPanel();
-        checkTodos = new javax.swing.JCheckBox();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tablePesquisa = new javax.swing.JTable();
-        editPesquisa = new javax.swing.JTextField();
-        comboCampoPesquisa = new javax.swing.JComboBox();
-        checkActiveTyping = new javax.swing.JCheckBox();
-        comboPesquisa = new javax.swing.JComboBox();
-        buttonFiltrar = new javax.swing.JButton();
-        panelCadastro = new javax.swing.JPanel();
-        panelAtleta = new javax.swing.JPanel();
-        labelCodigo = new javax.swing.JLabel();
-        labelNome = new javax.swing.JLabel();
-        labelDataNasc = new javax.swing.JLabel();
-        labelPeso = new javax.swing.JLabel();
-        labelSexo = new javax.swing.JLabel();
-        labelFaixa = new javax.swing.JLabel();
-        labelCatIdade = new javax.swing.JLabel();
-        labelCatPeso = new javax.swing.JLabel();
-        editId = new javax.swing.JTextField();
-        editNome = new javax.swing.JTextField();
-        editPeso = new javax.swing.JSpinner();
-        panelSexo = new javax.swing.JPanel();
-        radioMasc = new javax.swing.JRadioButton();
-        radioFem = new javax.swing.JRadioButton();
-        comboFaixa = new javax.swing.JComboBox();
-        comboCatIdade = new javax.swing.JComboBox();
-        comboCatPeso = new javax.swing.JComboBox();
-        labelKimono = new javax.swing.JLabel();
-        panelKimono = new javax.swing.JPanel();
-        checkboxKimono = new javax.swing.JCheckBox();
-        radioLiso = new javax.swing.JRadioButton();
-        radioTrancado = new javax.swing.JRadioButton();
-        labelAcademia = new javax.swing.JLabel();
-        editAcademia = new javax.swing.JTextField();
-        editDataNasc = new com.toedter.calendar.JDateChooser();
         tabChaveamento = new javax.swing.JPanel();
         panelCombinacoes = new javax.swing.JPanel();
         panelAtletas = new javax.swing.JPanel();
@@ -202,351 +156,15 @@ public class Main extends javax.swing.JFrame {
 
         tabPanels.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
 
-        checkTodos.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        checkTodos.setText("Exibir todos os registros");
-        checkTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkTodosActionPerformed(evt);
-            }
-        });
-
-        tablePesquisa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tablePesquisa.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tablePesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablePesquisaMouseClicked(evt);
-            }
-        });
-        jScrollPane6.setViewportView(tablePesquisa);
-
-        editPesquisa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        editPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                editPesquisaKeyReleased(evt);
-            }
-        });
-
-        comboCampoPesquisa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        comboCampoPesquisa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ID/Nome", "Peso", "Sexo", "Faixa", "Cat. Idade", "Cat. Peso", "Academia" }));
-        comboCampoPesquisa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboCampoPesquisaActionPerformed(evt);
-            }
-        });
-
-        checkActiveTyping.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        checkActiveTyping.setText("Active Typing");
-        checkActiveTyping.setToolTipText("<html>\n<b>Marcado:</b> enquanto você digita, os dados vão sendo filtrados instantaneamente.<br />\n<b>Desmarcado:</b> os dados só serão filtrados quando você pressionar <b>|Enter|</b> ou clicar em <b>OK</b>.\n</html>");
-
-        comboPesquisa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        buttonFiltrar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/tick.png"))); // NOI18N
-        buttonFiltrar.setText("OK");
-        buttonFiltrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonFiltrarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelPesquisaLayout = new javax.swing.GroupLayout(panelPesquisa);
-        panelPesquisa.setLayout(panelPesquisaLayout);
-        panelPesquisaLayout.setHorizontalGroup(
-            panelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPesquisaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPesquisaLayout.createSequentialGroup()
-                        .addComponent(checkTodos)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelPesquisaLayout.createSequentialGroup()
-                        .addGroup(panelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane6)
-                            .addGroup(panelPesquisaLayout.createSequentialGroup()
-                                .addComponent(editPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(checkActiveTyping, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboCampoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                                .addComponent(buttonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
-        );
-        panelPesquisaLayout.setVerticalGroup(
-            panelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPesquisaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboCampoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkActiveTyping)
-                    .addComponent(buttonFiltrar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkTodos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(217, Short.MAX_VALUE))
-        );
-
-        tabCadastro1.addTab("Pesquisar", new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/search.png")), panelPesquisa); // NOI18N
-
-        panelCadastro.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        panelAtleta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Atleta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-        panelAtleta.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        labelCodigo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelCodigo.setText("Código");
-
-        labelNome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelNome.setText("Nome");
-
-        labelDataNasc.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelDataNasc.setText("Data de Nascimento");
-
-        labelPeso.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelPeso.setText("Peso");
-
-        labelSexo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelSexo.setText("Sexo");
-
-        labelFaixa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelFaixa.setText("Faixa");
-
-        labelCatIdade.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelCatIdade.setText("Cat. Idade");
-
-        labelCatPeso.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelCatPeso.setText("Cat. por Peso");
-
-        editId.setEditable(false);
-        editId.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        editNome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        editNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
-        editPeso.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        editPeso.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), null, null, Float.valueOf(1.0f)));
-
-        panelSexo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        buttonGroup1.add(radioMasc);
-        radioMasc.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        radioMasc.setSelected(true);
-        radioMasc.setText("Masculino");
-
-        buttonGroup1.add(radioFem);
-        radioFem.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        radioFem.setText("Feminino");
-
-        javax.swing.GroupLayout panelSexoLayout = new javax.swing.GroupLayout(panelSexo);
-        panelSexo.setLayout(panelSexoLayout);
-        panelSexoLayout.setHorizontalGroup(
-            panelSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSexoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radioMasc)
-                    .addComponent(radioFem))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelSexoLayout.setVerticalGroup(
-            panelSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSexoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(radioMasc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(radioFem)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
-        comboFaixa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        comboFaixa.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Branca", "Cinza", "Amarela", "Laranja", "Verde", "Azul", "Roxa", "Marrom", "Preta", "Vermelha e Preta", "Vermelha" }));
-
-        comboCatIdade.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        comboCatIdade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mirim", "Infantil A", "Infantil B", "Infanto Juvenil A", "Infanto Juvenil B", "Juvenil", "Adulto", "Master", "Senior", "Super Senior" }));
-
-        comboCatPeso.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        comboCatPeso.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Galo", "Pluma", "Pena", "Leve", "Médio", "Meio Pesado", "Pesado", "Super Pesado", "Pesadíssimo" }));
-
-        labelKimono.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelKimono.setText("Kimono");
-
-        panelKimono.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        checkboxKimono.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        checkboxKimono.setText("Com Kimono");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, radioLiso, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), checkboxKimono, org.jdesktop.beansbinding.BeanProperty.create("selected"));
-        bindingGroup.addBinding(binding);
-
-        buttonGroup2.add(radioLiso);
-        radioLiso.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        radioLiso.setSelected(true);
-        radioLiso.setText("Liso");
-
-        buttonGroup2.add(radioTrancado);
-        radioTrancado.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        radioTrancado.setText("Trançado");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, radioLiso, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), radioTrancado, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        javax.swing.GroupLayout panelKimonoLayout = new javax.swing.GroupLayout(panelKimono);
-        panelKimono.setLayout(panelKimonoLayout);
-        panelKimonoLayout.setHorizontalGroup(
-            panelKimonoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKimonoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelKimonoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelKimonoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(checkboxKimono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(radioLiso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(radioTrancado))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelKimonoLayout.setVerticalGroup(
-            panelKimonoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelKimonoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(checkboxKimono)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioLiso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radioTrancado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        labelAcademia.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        labelAcademia.setText("Academia");
-
-        editAcademia.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        javax.swing.GroupLayout panelAtletaLayout = new javax.swing.GroupLayout(panelAtleta);
-        panelAtleta.setLayout(panelAtletaLayout);
-        panelAtletaLayout.setHorizontalGroup(
-            panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAtletaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editId, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelAtletaLayout.createSequentialGroup()
-                        .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelDataNasc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelSexo)
-                            .addComponent(panelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editDataNasc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(36, 36, 36)
-                        .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(editNome, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelNome)
-                            .addGroup(panelAtletaLayout.createSequentialGroup()
-                                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelPeso)
-                                    .addComponent(editPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelKimono)
-                                    .addComponent(panelKimono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(41, 41, 41)
-                                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(comboCatIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelCatIdade)
-                                    .addComponent(comboFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelFaixa)
-                                    .addComponent(labelCatPeso)
-                                    .addComponent(comboCatPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(labelAcademia)
-                    .addComponent(editAcademia, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelAtletaLayout.setVerticalGroup(
-            panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAtletaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelCodigo)
-                    .addComponent(labelNome))
-                .addGap(2, 2, 2)
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDataNasc)
-                    .addComponent(labelPeso)
-                    .addComponent(labelFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(editPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(editDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSexo)
-                    .addComponent(labelKimono)
-                    .addComponent(labelCatIdade))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAtletaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelKimono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelAtletaLayout.createSequentialGroup()
-                        .addComponent(comboCatIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelCatPeso)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboCatPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16)
-                .addComponent(labelAcademia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editAcademia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout panelCadastroLayout = new javax.swing.GroupLayout(panelCadastro);
-        panelCadastro.setLayout(panelCadastroLayout);
-        panelCadastroLayout.setHorizontalGroup(
-            panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelAtleta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(439, Short.MAX_VALUE))
-        );
-        panelCadastroLayout.setVerticalGroup(
-            panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelAtleta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(234, Short.MAX_VALUE))
-        );
-
-        tabCadastro1.addTab("Detalhe", new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/document.png")), panelCadastro); // NOI18N
-
         javax.swing.GroupLayout tabCadastroLayout = new javax.swing.GroupLayout(tabCadastro);
         tabCadastro.setLayout(tabCadastroLayout);
         tabCadastroLayout.setHorizontalGroup(
             tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabCadastro1)
-                .addContainerGap())
+            .addGap(0, 999, Short.MAX_VALUE)
         );
         tabCadastroLayout.setVerticalGroup(
             tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabCadastro1)
-                .addContainerGap())
+            .addGap(0, 643, Short.MAX_VALUE)
         );
 
         tabPanels.addTab("Cadastro", tabCadastro);
@@ -580,7 +198,7 @@ public class Main extends javax.swing.JFrame {
         );
         panelAtletasLayout.setVerticalGroup(
             panelAtletasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAtletasLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAtletasLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -618,7 +236,7 @@ public class Main extends javax.swing.JFrame {
         panelChaveamento_CombLayout.setVerticalGroup(
             panelChaveamento_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelChaveamento_CombLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonExcluir_Comb)
                 .addContainerGap())
@@ -663,7 +281,7 @@ public class Main extends javax.swing.JFrame {
         panelCombinacoes_CombLayout.setVerticalGroup(
             panelCombinacoes_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCombinacoes_CombLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCombinacoes_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCancelar_Comb)
@@ -685,6 +303,7 @@ public class Main extends javax.swing.JFrame {
         buttonOK_Cha1.setText("OK");
 
         comboCategoria1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        comboCategoria1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mirim", "Infantil A", "Infantil B", "Infanto Juvenil A", "Infanto Juvenil B", "Juvenil", "Adulto", "Master", "Senior", "Super Senior" }));
 
         javax.swing.GroupLayout panelProcurar_Cha1Layout = new javax.swing.GroupLayout(panelProcurar_Cha1);
         panelProcurar_Cha1.setLayout(panelProcurar_Cha1Layout);
@@ -713,42 +332,38 @@ public class Main extends javax.swing.JFrame {
         panelCombinacoesLayout.setHorizontalGroup(
             panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCombinacoesLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelAtletas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(buttonLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelCombinacoes_Comb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                        .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                                .addGap(195, 195, 195)
-                                .addComponent(panelChaveamento_Comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(panelProcurar_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(panelAtletas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelProcurar_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(buttonLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelCombinacoes_Comb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(panelCombinacoesLayout.createSequentialGroup()
+                .addGap(195, 195, 195)
+                .addComponent(panelChaveamento_Comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         panelCombinacoesLayout.setVerticalGroup(
             panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCombinacoesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelProcurar_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelAtletas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
+                        .addGap(123, 123, 123)
                         .addComponent(buttonRight)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonLeft)
-                        .addGap(0, 92, Short.MAX_VALUE))
-                    .addComponent(panelCombinacoes_Comb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(buttonLeft))
+                    .addGroup(panelCombinacoesLayout.createSequentialGroup()
+                        .addComponent(panelProcurar_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelCombinacoes_Comb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelAtletas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelChaveamento_Comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -960,136 +575,78 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        bindingGroup.bind();
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonIncluirActionPerformed
-        editingProcedure(true, true, false, true, 1, editNome);
+        switch (tabPanels.getSelectedIndex()) {
+            case 0:
+                cadastro.actionIncluir();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }//GEN-LAST:event_buttonIncluirActionPerformed
 
     private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
-        if (tablePesquisa.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione uma linha, primeiro.", "Espere!", JOptionPane.INFORMATION_MESSAGE);
-            return;
+        switch (tabPanels.getSelectedIndex()) {
+            case 0:
+                cadastro.actionEditar();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
         }
-        
-        AtletaModel atleta = model.getAtleta(tablePesquisa.getSelectedRow());
-        
-        editId.setText(String.valueOf(atleta.getId()));
-        editNome.setText(atleta.getNome());
-        editDataNasc.setDate(atleta.getData_nasc());
-        editPeso.setValue(atleta.getPeso());
-        radioMasc.setSelected(atleta.getSexo() == 'M');
-        radioFem.setSelected(atleta.getSexo() == 'F');
-        checkboxKimono.setSelected(atleta.isKimono());
-        radioLiso.setSelected(atleta.getTipo_kimono() == 'L');
-        radioTrancado.setSelected(atleta.getTipo_kimono() == 'T');
-        editAcademia.setText(atleta.getAcademia());
-        comboFaixa.setSelectedItem(atleta.getFaixa());
-        comboCatIdade.setSelectedItem(atleta.getCategoria_idade());
-        comboCatPeso.setSelectedItem(atleta.getCategoria_peso());
-        
-        editingProcedure(true, true, true, true, 1, editNome);
     }//GEN-LAST:event_buttonEditarActionPerformed
 
     private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
-        AtletasDataManager manager = new AtletasDataManager();
-        
-        if (editing) {
-            
-            AtletaModel example = new AtletaModel(Long.parseLong(editId.getText()));
-            AtletaModel atleta = new AtletaModel();
-            
-            atleta.setNome(editNome.getText());
-            atleta.setData_nasc(editDataNasc.getDate());
-            atleta.setPeso(Double.valueOf(editPeso.getValue().toString()));
-            atleta.setSexo(radioMasc.isSelected() ? 'M' : 'F');
-            atleta.setKimono(checkboxKimono.isSelected());
-            atleta.setTipo_kimono(radioLiso.isSelected() ? 'L' : 'T');
-            atleta.setAcademia(editAcademia.getText());
-            atleta.setFaixa(comboFaixa.getSelectedItem().toString());
-            atleta.setCategoria_idade(comboCatIdade.getSelectedItem().toString());
-            atleta.setCategoria_peso(comboCatPeso.getSelectedItem().toString());
-            
-            manager.update(example, atleta);
-            
-            editing = false;            
-        } else {
-            AtletaModel atleta = new AtletaModel(manager.getLastID() + 1);
-        
-            atleta.setNome(editNome.getText());
-            atleta.setData_nasc(editDataNasc.getDate());
-            atleta.setPeso(Double.valueOf(editPeso.getValue().toString()));
-            atleta.setSexo(radioMasc.isSelected() ? 'M' : 'F');
-            atleta.setKimono(checkboxKimono.isSelected());
-            atleta.setTipo_kimono(radioLiso.isSelected() ? 'L' : 'T');
-            atleta.setAcademia(editAcademia.getText());
-            atleta.setFaixa(comboFaixa.getSelectedItem().toString());
-            atleta.setCategoria_idade(comboCatIdade.getSelectedItem().toString());
-            atleta.setCategoria_peso(comboCatPeso.getSelectedItem().toString());
-            
-            manager.store(atleta);
-        }       
-        
-        JOptionPane.showMessageDialog(this, "Atleta '" + editNome.getText() + "' salvo.", "Informação", JOptionPane.INFORMATION_MESSAGE);
-        
-        filterTable(editPesquisa.getText());
-        
-        clearFieldsCadastro();
-        
-        editingProcedure(false, false, false, true, 0, editPesquisa);
+        switch (tabPanels.getSelectedIndex()) {
+            case 0:
+                cadastro.actionSalvar();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }//GEN-LAST:event_buttonSalvarActionPerformed
 
     private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
-        clearFieldsCadastro();
-        editingProcedure(false, false, false, true, 0, editPesquisa);
+        switch (tabPanels.getSelectedIndex()) {
+            case 0:
+                cadastro.actionCancelar();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
     private void buttonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExcluirActionPerformed
-        if (tablePesquisa.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione uma linha, primeiro!", "Ei...", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        int resposta = JOptionPane.showConfirmDialog(this, "Deseja mesmo excluir o atleta '" + editNome.getText() + "'?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        
-        if (resposta == JOptionPane.YES_OPTION) {
-            AtletasDataManager manager = new AtletasDataManager();            
-            int linha = tablePesquisa.getSelectedRow();
-            AtletaModel atleta = model.getAtleta(linha);
-            String nome_atleta = atleta.getNome();
-            manager.delete(atleta);
-            model.removerAtleta(linha);
-            JOptionPane.showMessageDialog(this, "Atleta '" + nome_atleta + "' foi excluido.", "Pronto", JOptionPane.INFORMATION_MESSAGE);
+        switch (tabPanels.getSelectedIndex()) {
+            case 0:
+                cadastro.actionExcluir();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
         }
     }//GEN-LAST:event_buttonExcluirActionPerformed
-    
-    private void editPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_editPesquisaKeyReleased
-        if (checkActiveTyping.isSelected()) {
-            filterTable(editPesquisa.getText());
-        }
-    }//GEN-LAST:event_editPesquisaKeyReleased
-
-    private void checkTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTodosActionPerformed
-        AtletasDataManager manager = new AtletasDataManager();
-        model.addAll(manager.getAll());
-    }//GEN-LAST:event_checkTodosActionPerformed
-
-    private void comboCampoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCampoPesquisaActionPerformed
-        evaluateCombosPesquisa();
-    }//GEN-LAST:event_comboCampoPesquisaActionPerformed
-
-    private void buttonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFiltrarActionPerformed
-        filterTable(editPesquisa.getText());
-    }//GEN-LAST:event_buttonFiltrarActionPerformed
-
-    private void tablePesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePesquisaMouseClicked
-        if (evt.getClickCount() == 2) {
-            buttonEditar.doClick();
-        }
-    }//GEN-LAST:event_tablePesquisaMouseClicked
 
     //<editor-fold defaultstate="collapsed" desc="Main Method">
     /**
@@ -1127,7 +684,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton buttonEditar;
     private javax.swing.JButton buttonExcluir;
     private javax.swing.JButton buttonExcluir_Comb;
-    private javax.swing.JButton buttonFiltrar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton buttonIncluir;
@@ -1137,59 +693,24 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton buttonOK_Cha1;
     private javax.swing.JButton buttonRight;
     private javax.swing.JButton buttonSalvar;
-    private javax.swing.JCheckBox checkActiveTyping;
-    private javax.swing.JCheckBox checkTodos;
-    private javax.swing.JCheckBox checkboxKimono;
-    private javax.swing.JComboBox comboCampoPesquisa;
-    private javax.swing.JComboBox comboCatIdade;
-    private javax.swing.JComboBox comboCatPeso;
     private javax.swing.JComboBox comboCategoria;
     private javax.swing.JComboBox comboCategoria1;
-    private javax.swing.JComboBox comboFaixa;
-    private javax.swing.JComboBox comboPesquisa;
-    private javax.swing.JTextField editAcademia;
-    private com.toedter.calendar.JDateChooser editDataNasc;
-    private javax.swing.JTextField editId;
-    private javax.swing.JTextField editNome;
-    private javax.swing.JSpinner editPeso;
-    private javax.swing.JTextField editPesquisa;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JLabel labelAcademia;
-    private javax.swing.JLabel labelCatIdade;
-    private javax.swing.JLabel labelCatPeso;
-    private javax.swing.JLabel labelCodigo;
-    private javax.swing.JLabel labelDataNasc;
-    private javax.swing.JLabel labelFaixa;
-    private javax.swing.JLabel labelKimono;
-    private javax.swing.JLabel labelNome;
-    private javax.swing.JLabel labelPeso;
-    private javax.swing.JLabel labelSexo;
-    private javax.swing.JPanel panelAtleta;
     private javax.swing.JPanel panelAtletas;
     private javax.swing.JPanel panelButtons;
-    private javax.swing.JPanel panelCadastro;
     private javax.swing.JPanel panelChaveamento;
     private javax.swing.JPanel panelChaveamento_Comb;
     private javax.swing.JPanel panelCombinacoes;
     private javax.swing.JPanel panelCombinacoes_Comb;
-    private javax.swing.JPanel panelKimono;
-    private javax.swing.JPanel panelPesquisa;
     private javax.swing.JPanel panelProcurar_Cha;
     private javax.swing.JPanel panelProcurar_Cha1;
     private javax.swing.JPanel panelProxLutas;
-    private javax.swing.JPanel panelSexo;
     private javax.swing.JPanel panelVencedores;
-    private javax.swing.JRadioButton radioFem;
-    private javax.swing.JRadioButton radioLiso;
-    private javax.swing.JRadioButton radioMasc;
-    private javax.swing.JRadioButton radioTrancado;
     private javax.swing.JPanel tabCadastro;
-    private javax.swing.JTabbedPane tabCadastro1;
     private javax.swing.JPanel tabChaveamento;
     private javax.swing.JPanel tabLutas;
     private javax.swing.JTabbedPane tabPanels;
@@ -1197,133 +718,28 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable tableAtletas;
     private javax.swing.JTable tableChaveamento_Comb;
     private javax.swing.JTable tableCombinacoes_Comb;
-    private javax.swing.JTable tablePesquisa;
     private javax.swing.JTable tableProxLutas;
     private javax.swing.JTable tableVencedores;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
     //</editor-fold>
     
-    private void editingProcedure(boolean interf, boolean cadbtn, boolean editing, boolean changetab, int tabindex, Component toFocus) {
-        changeInterfaceCadastro(interf);
-        changeMainButtons(cadbtn);
-        
-        this.editing = editing;
-        
-        if (changetab) {
-            tabCadastro1.setSelectedIndex(tabindex);
-        }
-        
-        if (toFocus != null) {
-            toFocus.requestFocus();
-        }
-    }
-    
     private void preConfigure() {
-        setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         
-        evaluateCombosPesquisa();        
-        tablePesquisa.setModel(model);
-        
-        editPesquisa.requestFocus();
-        changeInterfaceCadastro(false);
-        changeMainButtons(false);
-        
-        ToolTipManager.sharedInstance().setDismissDelay(60000);
+        if (tabPanels.getSelectedIndex() == 0) {
+            cadastro.preConfigure();
+            cadastro.setBounds(0, 0, 999, 643);
+            tabCadastro.add(cadastro);
+            cadastro.setVisible(true);
+        }
     }
     
-    private void changeInterfaceCadastro(boolean enabled) {
-        panelAtleta.setEnabled(enabled);
-        editNome.setEnabled(enabled);
-        editDataNasc.setEnabled(enabled);
-        editPeso.setEnabled(enabled);
-        radioMasc.setEnabled(enabled);
-        radioFem.setEnabled(enabled);
-        checkboxKimono.setEnabled(enabled);
-        radioLiso.setEnabled(enabled);
-        radioTrancado.setEnabled(enabled);
-        editAcademia.setEnabled(enabled);
-        comboFaixa.setEnabled(enabled);
-        comboCatIdade.setEnabled(enabled);
-        comboCatPeso.setEnabled(enabled);
-                
-        tabPanels.setEnabled(!enabled);
-    }
-    
-    private void changeMainButtons(boolean editing) {
+    protected void changeMainButtons(boolean editing) {
         buttonIncluir.setEnabled(!editing);
         buttonEditar.setEnabled(!editing);
         buttonSalvar.setEnabled(editing);
         buttonCancelar.setEnabled(editing);
         buttonExcluir.setEnabled(!editing);
-    }
-    
-    private void clearFieldsCadastro() {
-        editId.setText(null);
-        editNome.setText(null);
-        editDataNasc.setDate(null);
-        editPeso.setValue(0);
-        radioMasc.setSelected(true);
-        checkboxKimono.setSelected(false);
-        radioLiso.setSelected(true);
-        editAcademia.setText(null);
-        comboFaixa.setSelectedIndex(0);
-        comboCatIdade.setSelectedIndex(0);
-        comboCatPeso.setSelectedIndex(0);
-    }
-    
-    private void evaluateCombosPesquisa() {
-        if (comboCampoPesquisa.getSelectedIndex() == 0 || comboCampoPesquisa.getSelectedIndex() == 1 || comboCampoPesquisa.getSelectedIndex() == 6) {
-            editPesquisa.setEnabled(true);
-            comboPesquisa.setEnabled(false);
-            checkActiveTyping.setEnabled(true);
-            comboPesquisa.setModel(new DefaultComboBoxModel());
-        } else {
-            if (comboCampoPesquisa.getSelectedIndex() == 2) {
-                comboPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
-            } else if (comboCampoPesquisa.getSelectedIndex() == 3) {
-                comboPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Branca", "Cinza", "Amarela", "Laranja", "Verde", "Azul", "Roxa", "Marrom", "Preta", "Vermelha e Preta", "Vermelha"}));
-            } else if (comboCampoPesquisa.getSelectedIndex() == 4) {
-                comboPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Mirim", "Infantil A", "Infantil B", "Infanto Juvenil A", "Infanto Juvenil B", "Juvenil", "Adulto", "Master", "Senior", "Super Senior"}));
-            } else if (comboCampoPesquisa.getSelectedIndex() == 5) {
-                comboPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Galo", "Pluma", "Pena", "Leve", "Médio", "Meio Pesado", "Pesado", "Super Pesado", "Pesadíssimo"}));
-            }
-            editPesquisa.setEnabled(false);
-            comboPesquisa.setEnabled(true);
-            checkActiveTyping.setEnabled(false);
-            checkActiveTyping.setSelected(false);
-        }
-    }
-    
-    private void filterTable(String text) {
-        AtletasDataManager manager = new AtletasDataManager();
-        List<AtletaModel> atletas = new ArrayList<>();
-
-        switch (comboCampoPesquisa.getSelectedIndex()) {
-            case 0:
-                try {
-                    long id = Long.parseLong(text);
-                    atletas = manager.getByAttr("id", id);
-                } catch (NumberFormatException except) {
-                    String nome = text;
-                    atletas = manager.getByAttr("nome", nome);
-                }
-                break;
-            case 1:
-                try {
-                    double peso = Double.parseDouble(text);
-                    atletas = manager.getByAttr("peso", peso);
-                } catch (NumberFormatException except) {
-                    editPesquisa.setText(null);
-                }
-                break;
-            case 6:
-                String academia = text;
-                atletas = manager.getByAttr("academia", academia);
-                break;
-        }
-
-        model.addAll(atletas);
     }
     
 }

@@ -147,11 +147,11 @@ public class AtletasDataManager extends DataManager {
             Class classe = example.getClass();
             Field atrib = classe.getDeclaredField(attr);
             atrib.setAccessible(true);
-            atrib.getClass();
             atrib.set(example, valor);
             
             Query query = db.query();
-            query.descend(attr).constrain(valor).like();
+            //query.descend(attr).constrain(valor).like();
+            query.descend(attr).constrain(valor).equal();
             
             ObjectSet result = query.execute();
             
