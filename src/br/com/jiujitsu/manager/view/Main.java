@@ -10,13 +10,14 @@ public class Main extends JFrame {
     
     protected boolean editing;
     private Cadastro cadastro = new Cadastro(this);
+    private Chaveamento chaveamento = new Chaveamento(this);
     
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        preConfigure();       
+        preConfigure(tabPanels.getSelectedIndex());
     }
             
     /**
@@ -39,24 +40,6 @@ public class Main extends JFrame {
         tabPanels = new javax.swing.JTabbedPane();
         tabCadastro = new javax.swing.JPanel();
         tabChaveamento = new javax.swing.JPanel();
-        panelCombinacoes = new javax.swing.JPanel();
-        panelAtletas = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableAtletas = new javax.swing.JTable();
-        panelChaveamento_Comb = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tableChaveamento_Comb = new javax.swing.JTable();
-        buttonExcluir_Comb = new javax.swing.JButton();
-        panelCombinacoes_Comb = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tableCombinacoes_Comb = new javax.swing.JTable();
-        buttonCancelar_Comb = new javax.swing.JButton();
-        buttonCombinar = new javax.swing.JButton();
-        buttonRight = new javax.swing.JButton();
-        buttonLeft = new javax.swing.JButton();
-        panelProcurar_Cha1 = new javax.swing.JPanel();
-        buttonOK_Cha1 = new javax.swing.JButton();
-        comboCategoria1 = new javax.swing.JComboBox();
         tabLutas = new javax.swing.JPanel();
         panelChaveamento = new javax.swing.JPanel();
         panelProcurar_Cha = new javax.swing.JPanel();
@@ -155,6 +138,11 @@ public class Main extends JFrame {
         );
 
         tabPanels.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        tabPanels.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabPanelsMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabCadastroLayout = new javax.swing.GroupLayout(tabCadastro);
         tabCadastro.setLayout(tabCadastroLayout);
@@ -172,218 +160,15 @@ public class Main extends JFrame {
         tabChaveamento.setMaximumSize(new java.awt.Dimension(1008, 670));
         tabChaveamento.setPreferredSize(new java.awt.Dimension(1008, 670));
 
-        panelCombinacoes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        panelAtletas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Atletas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-
-        tableAtletas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tableAtletas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane2.setViewportView(tableAtletas);
-
-        javax.swing.GroupLayout panelAtletasLayout = new javax.swing.GroupLayout(panelAtletas);
-        panelAtletas.setLayout(panelAtletasLayout);
-        panelAtletasLayout.setHorizontalGroup(
-            panelAtletasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAtletasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelAtletasLayout.setVerticalGroup(
-            panelAtletasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAtletasLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        panelChaveamento_Comb.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chaveamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-
-        tableChaveamento_Comb.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tableChaveamento_Comb.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane5.setViewportView(tableChaveamento_Comb);
-
-        buttonExcluir_Comb.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonExcluir_Comb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/delete_1.png"))); // NOI18N
-        buttonExcluir_Comb.setText("Excluir");
-
-        javax.swing.GroupLayout panelChaveamento_CombLayout = new javax.swing.GroupLayout(panelChaveamento_Comb);
-        panelChaveamento_Comb.setLayout(panelChaveamento_CombLayout);
-        panelChaveamento_CombLayout.setHorizontalGroup(
-            panelChaveamento_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelChaveamento_CombLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelChaveamento_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelChaveamento_CombLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(buttonExcluir_Comb))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelChaveamento_CombLayout.setVerticalGroup(
-            panelChaveamento_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelChaveamento_CombLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonExcluir_Comb)
-                .addContainerGap())
-        );
-
-        panelCombinacoes_Comb.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Combinações", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-
-        tableCombinacoes_Comb.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tableCombinacoes_Comb.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane4.setViewportView(tableCombinacoes_Comb);
-
-        buttonCancelar_Comb.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonCancelar_Comb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/block_1.png"))); // NOI18N
-        buttonCancelar_Comb.setText("Cancelar");
-
-        buttonCombinar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonCombinar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/tick.png"))); // NOI18N
-        buttonCombinar.setText("Combinar");
-
-        javax.swing.GroupLayout panelCombinacoes_CombLayout = new javax.swing.GroupLayout(panelCombinacoes_Comb);
-        panelCombinacoes_Comb.setLayout(panelCombinacoes_CombLayout);
-        panelCombinacoes_CombLayout.setHorizontalGroup(
-            panelCombinacoes_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCombinacoes_CombLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCombinacoes_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCombinacoes_CombLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(buttonCombinar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonCancelar_Comb)))
-                .addContainerGap())
-        );
-        panelCombinacoes_CombLayout.setVerticalGroup(
-            panelCombinacoes_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCombinacoes_CombLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelCombinacoes_CombLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonCancelar_Comb)
-                    .addComponent(buttonCombinar))
-                .addContainerGap())
-        );
-
-        buttonRight.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/right.png"))); // NOI18N
-
-        buttonLeft.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/left.png"))); // NOI18N
-
-        panelProcurar_Cha1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Procurar por Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-        panelProcurar_Cha1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        buttonOK_Cha1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonOK_Cha1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/tick.png"))); // NOI18N
-        buttonOK_Cha1.setText("OK");
-
-        comboCategoria1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        comboCategoria1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mirim", "Infantil A", "Infantil B", "Infanto Juvenil A", "Infanto Juvenil B", "Juvenil", "Adulto", "Master", "Senior", "Super Senior" }));
-
-        javax.swing.GroupLayout panelProcurar_Cha1Layout = new javax.swing.GroupLayout(panelProcurar_Cha1);
-        panelProcurar_Cha1.setLayout(panelProcurar_Cha1Layout);
-        panelProcurar_Cha1Layout.setHorizontalGroup(
-            panelProcurar_Cha1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProcurar_Cha1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(comboCategoria1, 0, 192, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonOK_Cha1)
-                .addContainerGap())
-        );
-        panelProcurar_Cha1Layout.setVerticalGroup(
-            panelProcurar_Cha1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProcurar_Cha1Layout.createSequentialGroup()
-                .addGroup(panelProcurar_Cha1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelProcurar_Cha1Layout.createSequentialGroup()
-                        .addComponent(buttonOK_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(comboCategoria1))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout panelCombinacoesLayout = new javax.swing.GroupLayout(panelCombinacoes);
-        panelCombinacoes.setLayout(panelCombinacoesLayout);
-        panelCombinacoesLayout.setHorizontalGroup(
-            panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelAtletas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelProcurar_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelCombinacoes_Comb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                .addGap(195, 195, 195)
-                .addComponent(panelChaveamento_Comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
-        );
-        panelCombinacoesLayout.setVerticalGroup(
-            panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(buttonRight)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonLeft))
-                    .addGroup(panelCombinacoesLayout.createSequentialGroup()
-                        .addComponent(panelProcurar_Cha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelCombinacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelCombinacoes_Comb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelAtletas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelChaveamento_Comb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout tabChaveamentoLayout = new javax.swing.GroupLayout(tabChaveamento);
         tabChaveamento.setLayout(tabChaveamentoLayout);
         tabChaveamentoLayout.setHorizontalGroup(
             tabChaveamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabChaveamentoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelCombinacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 999, Short.MAX_VALUE)
         );
         tabChaveamentoLayout.setVerticalGroup(
             tabChaveamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabChaveamentoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelCombinacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 643, Short.MAX_VALUE)
         );
 
         tabPanels.addTab("Chaveamento", tabChaveamento);
@@ -648,6 +433,10 @@ public class Main extends JFrame {
         }
     }//GEN-LAST:event_buttonExcluirActionPerformed
 
+    private void tabPanelsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabPanelsMouseReleased
+        preConfigure(tabPanels.getSelectedIndex());
+    }//GEN-LAST:event_tabPanelsMouseReleased
+
     //<editor-fold defaultstate="collapsed" desc="Main Method">
     /**
      * @param args the command line arguments
@@ -679,35 +468,20 @@ public class Main extends JFrame {
     //<editor-fold defaultstate="collapsed" desc="Variables declaration">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancelar;
-    private javax.swing.JButton buttonCancelar_Comb;
-    private javax.swing.JButton buttonCombinar;
     private javax.swing.JButton buttonEditar;
     private javax.swing.JButton buttonExcluir;
-    private javax.swing.JButton buttonExcluir_Comb;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton buttonIncluir;
     private javax.swing.JButton buttonIniciarLuta;
-    private javax.swing.JButton buttonLeft;
     private javax.swing.JButton buttonOK_Cha;
-    private javax.swing.JButton buttonOK_Cha1;
-    private javax.swing.JButton buttonRight;
     private javax.swing.JButton buttonSalvar;
     private javax.swing.JComboBox comboCategoria;
-    private javax.swing.JComboBox comboCategoria1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JPanel panelAtletas;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelChaveamento;
-    private javax.swing.JPanel panelChaveamento_Comb;
-    private javax.swing.JPanel panelCombinacoes;
-    private javax.swing.JPanel panelCombinacoes_Comb;
     private javax.swing.JPanel panelProcurar_Cha;
-    private javax.swing.JPanel panelProcurar_Cha1;
     private javax.swing.JPanel panelProxLutas;
     private javax.swing.JPanel panelVencedores;
     private javax.swing.JPanel tabCadastro;
@@ -715,22 +489,35 @@ public class Main extends JFrame {
     private javax.swing.JPanel tabLutas;
     private javax.swing.JTabbedPane tabPanels;
     private javax.swing.JPanel tabRelatorios;
-    private javax.swing.JTable tableAtletas;
-    private javax.swing.JTable tableChaveamento_Comb;
-    private javax.swing.JTable tableCombinacoes_Comb;
     private javax.swing.JTable tableProxLutas;
     private javax.swing.JTable tableVencedores;
     // End of variables declaration//GEN-END:variables
     //</editor-fold>
     
-    private void preConfigure() {
+    private void preConfigure(int tabIndex) {
         this.setLocationRelativeTo(null);
         
-        if (tabPanels.getSelectedIndex() == 0) {
-            cadastro.preConfigure();
-            cadastro.setBounds(0, 0, 999, 643);
-            tabCadastro.add(cadastro);
-            cadastro.setVisible(true);
+        switch (tabIndex) {
+            case 0:
+                if (!cadastro.isValid()) {
+                    cadastro.preConfigure();
+                    cadastro.setBounds(0, 0, 999, 643);
+                    tabCadastro.add(cadastro);
+                    cadastro.setVisible(true);
+                }
+                break;
+            case 1:
+                if (!chaveamento.isValid()) {
+                    chaveamento.preConfigure();
+                    chaveamento.setBounds(0, 0, 999, 643);
+                    tabChaveamento.add(chaveamento);
+                    chaveamento.setVisible(true);
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;           
         }
     }
     

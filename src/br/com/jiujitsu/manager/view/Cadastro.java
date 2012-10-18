@@ -100,6 +100,11 @@ public class Cadastro extends javax.swing.JPanel {
 
             }
         ));
+        tablePesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tablePesquisaMouseReleased(evt);
+            }
+        });
         jScrollPane6.setViewportView(tablePesquisa);
 
         editPesquisa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
@@ -133,7 +138,7 @@ public class Cadastro extends javax.swing.JPanel {
         });
 
         buttonLimpar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/1_049.png"))); // NOI18N
+        buttonLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/clear.png"))); // NOI18N
         buttonLimpar.setText("Limpar");
         buttonLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,7 +421,7 @@ public class Cadastro extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabCadastro1, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
+                .addComponent(tabCadastro1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -552,6 +557,12 @@ public class Cadastro extends javax.swing.JPanel {
     private void buttonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLimparActionPerformed
         tableModelPesquisa.limpar();
     }//GEN-LAST:event_buttonLimparActionPerformed
+
+    private void tablePesquisaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePesquisaMouseReleased
+        if (evt.getClickCount() == 2) {
+            actionEditar();
+        }
+    }//GEN-LAST:event_tablePesquisaMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonFiltrar;
