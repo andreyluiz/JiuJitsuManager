@@ -6,8 +6,9 @@ import javax.swing.JPanel;
  *
  * @author Andrey Luiz
  */
-public class Chaveamento extends JPanel implements EditingOperator {
+public class Chaveamento extends JPanel {
 
+    private static Chaveamento instance = null;
     private Main parent;
     
     /** Creates new form Chaveamento */
@@ -16,34 +17,15 @@ public class Chaveamento extends JPanel implements EditingOperator {
         initComponents();
     }
     
-    @Override
+    public static Chaveamento getInstance(Main parent) {
+        if (instance == null) {
+            instance = new Chaveamento(parent);
+        }
+        return instance;
+    }
+        
     public void preConfigure() {        
-        parent.changeMainButtons(false);       
-    }
-
-    @Override
-    public void actionIncluir() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void actionEditar() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void actionSalvar() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void actionCancelar() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void actionExcluir() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        parent.changeMainButtons(false, false);
     }
 
     /** This method is called from within the constructor to

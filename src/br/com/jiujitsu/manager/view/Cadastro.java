@@ -21,6 +21,7 @@ import javax.swing.table.TableColumnModel;
  */
 public class Cadastro extends JPanel implements EditingOperator {
 
+    private static Cadastro instance = null;
     private AtletasTableModel tableModelPesquisa = new AtletasTableModel();
     private Main parent;
     
@@ -32,6 +33,13 @@ public class Cadastro extends JPanel implements EditingOperator {
         initComponents();
     }
     
+    public static Cadastro getInstance(Main parent) {
+        if (instance == null) {
+            instance = new Cadastro(parent);
+        }
+        return instance;
+    }
+    
     @Override
     public void preConfigure() {
         evaluateCombosPesquisa();        
@@ -39,7 +47,7 @@ public class Cadastro extends JPanel implements EditingOperator {
         
         editPesquisa.requestFocus();
         changeInterfaceCadastro(false);
-        parent.changeMainButtons(false);
+        parent.changeMainButtons(false, true);
 
         buttonFiltrar.setEnabled(false);
 
@@ -249,6 +257,11 @@ public class Cadastro extends JPanel implements EditingOperator {
         checkActiveTyping.setToolTipText("<html>\n<b>Marcado:</b> enquanto você digita, os dados vão sendo filtrados instantaneamente.<br />\n<b>Desmarcado:</b> os dados só serão filtrados quando você pressionar <b>|Enter|</b> ou clicar em <b>OK</b>.\n</html>");
 
         comboPesquisa.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        comboPesquisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPesquisaActionPerformed(evt);
+            }
+        });
 
         buttonFiltrar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         buttonFiltrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/tick.png"))); // NOI18N
@@ -585,6 +598,10 @@ public class Cadastro extends JPanel implements EditingOperator {
         }
     }//GEN-LAST:event_tablePesquisaMouseReleased
 
+    private void comboPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPesquisaActionPerformed
+        buttonFiltrar.setEnabled(comboPesquisa.getSelectedIndex() >= 0);
+    }//GEN-LAST:event_comboPesquisaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonFiltrar;
     private javax.swing.JButton buttonLimpar;
@@ -628,7 +645,7 @@ public class Cadastro extends JPanel implements EditingOperator {
         
     private void editingProcedure(boolean interf, boolean cadbtn, boolean editing, boolean changetab, int tabindex, Component toFocus) {
         changeInterfaceCadastro(interf);
-        parent.changeMainButtons(cadbtn);
+        parent.changeMainButtons(cadbtn, true);
         
         parent.editing = editing;
         
@@ -676,7 +693,9 @@ public class Cadastro extends JPanel implements EditingOperator {
             editPesquisa.setEnabled(true);
             comboPesquisa.setEnabled(false);
             checkActiveTyping.setEnabled(true);
-            comboPesquisa.setModel(new DefaultComboBoxModel());
+            comboPesquisa.setModel(new DefaultComboBoxModel());           
+            
+            buttonFiltrar.setEnabled(!editPesquisa.getText().equals(""));
         } else {
             if (comboCampoPesquisa.getSelectedIndex() == 2) {
                 comboPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Feminino"}));
@@ -691,6 +710,8 @@ public class Cadastro extends JPanel implements EditingOperator {
             comboPesquisa.setEnabled(true);
             checkActiveTyping.setEnabled(false);
             checkActiveTyping.setSelected(false);
+            
+            buttonFiltrar.setEnabled(comboPesquisa.getSelectedIndex() >= 0);
         }
     }
     
@@ -715,6 +736,22 @@ public class Cadastro extends JPanel implements EditingOperator {
                 } catch (NumberFormatException except) {
                     editPesquisa.setText(null);
                 }
+                break;
+            case 2:
+                char sexo = comboPesquisa.getSelectedIndex() == 0 ? 'M' : 'F';
+                atletas = manager.getByAttr("sexo", sexo);
+                break;
+            case 3:
+                String faixa = comboPesquisa.getSelectedItem().toString();
+                atletas = manager.getByAttr("faixa", faixa);
+                break;
+            case 4:
+                String cat_idade = comboPesquisa.getSelectedItem().toString();
+                atletas = manager.getByAttr("categoria_idade", cat_idade);
+                break;
+            case 5:
+                String cat_peso = comboPesquisa.getSelectedItem().toString();
+                atletas = manager.getByAttr("categoria_peso", cat_peso);
                 break;
             case 6:
                 String academia = text;

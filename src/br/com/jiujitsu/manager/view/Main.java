@@ -9,9 +9,9 @@ import javax.swing.JFrame;
 public class Main extends JFrame {
     
     protected boolean editing;
-    private Cadastro cadastro = new Cadastro(this);
-    private Chaveamento chaveamento = new Chaveamento(this);
-    private Lutas lutas = new Lutas(this);
+    private Cadastro cadastro = Cadastro.getInstance(this);
+    private Chaveamento chaveamento = Chaveamento.getInstance(this);
+    private Lutas lutas = Lutas.getInstance(this);
     
     /**
      * Creates new form Main
@@ -26,22 +26,28 @@ public class Main extends JFrame {
         
         switch (tabIndex) {
             case 0:
-                if (!cadastro.isValid()) {
-                    cadastro.preConfigure();
+                if (!cadastro.isValid()) {                    
                     cadastro.setBounds(0, 0, 999, 643);
                     tabCadastro.add(cadastro);
                     cadastro.setVisible(true);
                 }
+                cadastro.preConfigure();
                 break;
             case 1:
-                if (!chaveamento.isValid()) {
-                    chaveamento.preConfigure();
+                if (!chaveamento.isValid()) {                    
                     chaveamento.setBounds(0, 0, 999, 643);
                     tabChaveamento.add(chaveamento);
                     chaveamento.setVisible(true);
                 }
+                chaveamento.preConfigure();
                 break;
             case 2:
+                if (!lutas.isValid()) {                    
+                    lutas.setBounds(0, 0, 999, 643);
+                    tabLutas.add(lutas);
+                    lutas.setVisible(true);
+                }
+                lutas.preConfigure();
                 break;
             case 3:
                 break;           
@@ -246,13 +252,7 @@ public class Main extends JFrame {
         switch (tabPanels.getSelectedIndex()) {
             case 0:
                 cadastro.actionIncluir();
-                break;
-            case 1:                
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
+                break;            
         }
     }//GEN-LAST:event_buttonIncluirActionPerformed
 
@@ -260,13 +260,7 @@ public class Main extends JFrame {
         switch (tabPanels.getSelectedIndex()) {
             case 0:
                 cadastro.actionEditar();
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
+                break;            
         }
     }//GEN-LAST:event_buttonEditarActionPerformed
 
@@ -274,13 +268,7 @@ public class Main extends JFrame {
         switch (tabPanels.getSelectedIndex()) {
             case 0:
                 cadastro.actionSalvar();
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
+                break;            
         }
     }//GEN-LAST:event_buttonSalvarActionPerformed
 
@@ -288,13 +276,7 @@ public class Main extends JFrame {
         switch (tabPanels.getSelectedIndex()) {
             case 0:
                 cadastro.actionCancelar();
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
+                break;            
         }
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
@@ -302,13 +284,7 @@ public class Main extends JFrame {
         switch (tabPanels.getSelectedIndex()) {
             case 0:
                 cadastro.actionExcluir();
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
+                break;           
         }
     }//GEN-LAST:event_buttonExcluirActionPerformed
 
@@ -362,12 +338,12 @@ public class Main extends JFrame {
     // End of variables declaration//GEN-END:variables
     //</editor-fold>
             
-    protected void changeMainButtons(boolean editing) {
-        buttonIncluir.setEnabled(!editing);
-        buttonEditar.setEnabled(!editing);
-        buttonSalvar.setEnabled(editing);
-        buttonCancelar.setEnabled(editing);
-        buttonExcluir.setEnabled(!editing);
+    protected void changeMainButtons(boolean editing, boolean cadastro) {
+        buttonIncluir.setEnabled(!editing && cadastro);
+        buttonEditar.setEnabled(!editing && cadastro);
+        buttonSalvar.setEnabled(editing && cadastro);
+        buttonCancelar.setEnabled(editing && cadastro);
+        buttonExcluir.setEnabled(!editing && cadastro);
     }
     
 }
