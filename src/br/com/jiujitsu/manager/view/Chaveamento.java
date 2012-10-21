@@ -1,12 +1,12 @@
 package br.com.jiujitsu.manager.view;
 
-import javax.swing.ToolTipManager;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Andrey Luiz
  */
-public class Chaveamento extends javax.swing.JPanel {
+public class Chaveamento extends JPanel implements EditingOperator {
 
     private Main parent;
     
@@ -14,6 +14,36 @@ public class Chaveamento extends javax.swing.JPanel {
     public Chaveamento(Main parent) {
         this.parent = parent;
         initComponents();
+    }
+    
+    @Override
+    public void preConfigure() {        
+        parent.changeMainButtons(false);       
+    }
+
+    @Override
+    public void actionIncluir() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void actionEditar() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void actionSalvar() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void actionCancelar() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void actionExcluir() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** This method is called from within the constructor to
@@ -262,7 +292,6 @@ public class Chaveamento extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancelar_Comb;
     private javax.swing.JButton buttonCombinar;
@@ -283,9 +312,5 @@ public class Chaveamento extends javax.swing.JPanel {
     private javax.swing.JTable tableChaveamento_Comb;
     private javax.swing.JTable tableCombinacoes_Comb;
     // End of variables declaration//GEN-END:variables
-
-    protected void preConfigure() {        
-        parent.changeMainButtons(false);       
-    }
 
 }

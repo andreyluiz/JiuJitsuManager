@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ToolTipManager;
 import javax.swing.table.JTableHeader;
@@ -18,7 +19,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author Andrey Luiz
  */
-public class Cadastro extends javax.swing.JPanel {
+public class Cadastro extends JPanel implements EditingOperator {
 
     private AtletasTableModel tableModelPesquisa = new AtletasTableModel();
     private Main parent;
@@ -30,7 +31,128 @@ public class Cadastro extends javax.swing.JPanel {
         this.parent = parent;
         initComponents();
     }
+    
+    @Override
+    public void preConfigure() {
+        evaluateCombosPesquisa();        
+        tablePesquisa.setModel(tableModelPesquisa);
+        
+        editPesquisa.requestFocus();
+        changeInterfaceCadastro(false);
+        parent.changeMainButtons(false);
 
+        buttonFiltrar.setEnabled(false);
+
+        ToolTipManager.sharedInstance().setDismissDelay(60000);
+        formatTableAtletasCadastro();
+    }
+
+    @Override
+    public void actionIncluir() {
+        editingProcedure(true, true, false, true, 1, editNome);
+    }
+    
+    @Override
+    public void actionEditar() {
+        if (tablePesquisa.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione uma linha, primeiro.", "Espere!", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        AtletaModel atleta = tableModelPesquisa.getAtleta(tablePesquisa.getSelectedRow());
+        
+        editId.setText(String.valueOf(atleta.getId()));
+        editNome.setText(atleta.getNome());
+        editDataNasc.setDate(atleta.getData_nasc());
+        editPeso.setValue(atleta.getPeso());
+        radioMasc.setSelected(atleta.getSexo() == 'M');
+        radioFem.setSelected(atleta.getSexo() == 'F');
+        checkboxKimono.setSelected(atleta.isKimono());
+        radioLiso.setSelected(atleta.getTipo_kimono() == 'L');
+        radioTrancado.setSelected(atleta.getTipo_kimono() == 'T');
+        editAcademia.setText(atleta.getAcademia());
+        comboFaixa.setSelectedItem(atleta.getFaixa());
+        comboCatIdade.setSelectedItem(atleta.getCategoria_idade());
+        comboCatPeso.setSelectedItem(atleta.getCategoria_peso());
+        
+        editingProcedure(true, true, true, true, 1, editNome);
+    }
+    
+    @Override
+    public void actionSalvar() {
+        AtletasDataManager manager = new AtletasDataManager();
+        
+        if (parent.editing) {
+            
+            AtletaModel example = new AtletaModel(Long.parseLong(editId.getText()));
+            AtletaModel atleta = new AtletaModel();
+            
+            atleta.setNome(editNome.getText());
+            atleta.setData_nasc(editDataNasc.getDate());
+            atleta.setPeso(Double.valueOf(editPeso.getValue().toString()));
+            atleta.setSexo(radioMasc.isSelected() ? 'M' : 'F');
+            atleta.setKimono(checkboxKimono.isSelected());
+            atleta.setTipo_kimono(radioLiso.isSelected() ? 'L' : 'T');
+            atleta.setAcademia(editAcademia.getText());
+            atleta.setFaixa(comboFaixa.getSelectedItem().toString());
+            atleta.setCategoria_idade(comboCatIdade.getSelectedItem().toString());
+            atleta.setCategoria_peso(comboCatPeso.getSelectedItem().toString());
+            
+            manager.update(example, atleta);
+            
+            parent.editing = false;            
+        } else {
+            AtletaModel atleta = new AtletaModel(manager.getLastID() + 1);
+        
+            atleta.setNome(editNome.getText());
+            atleta.setData_nasc(editDataNasc.getDate());
+            atleta.setPeso(Double.valueOf(editPeso.getValue().toString()));
+            atleta.setSexo(radioMasc.isSelected() ? 'M' : 'F');
+            atleta.setKimono(checkboxKimono.isSelected());
+            atleta.setTipo_kimono(radioLiso.isSelected() ? 'L' : 'T');
+            atleta.setAcademia(editAcademia.getText());
+            atleta.setFaixa(comboFaixa.getSelectedItem().toString());
+            atleta.setCategoria_idade(comboCatIdade.getSelectedItem().toString());
+            atleta.setCategoria_peso(comboCatPeso.getSelectedItem().toString());
+            
+            manager.store(atleta);
+        }       
+        
+        JOptionPane.showMessageDialog(this, "Atleta '" + editNome.getText() + "' salvo.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        
+        filterTable(editPesquisa.getText());
+        
+        clearFieldsCadastro();
+        
+        editingProcedure(false, false, false, true, 0, editPesquisa);
+    }
+    
+    @Override
+    public void actionCancelar() {
+        clearFieldsCadastro();
+        editingProcedure(false, false, false, true, 0, editPesquisa);
+    }
+    
+    @Override
+    public void actionExcluir() {
+        if (tablePesquisa.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione uma linha, primeiro!", "Ei...", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int resposta = JOptionPane.showConfirmDialog(this, "Deseja mesmo excluir o atleta '" + editNome.getText() + "'?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        
+        if (resposta == JOptionPane.YES_OPTION) {
+            AtletasDataManager manager = new AtletasDataManager();            
+            int linha = tablePesquisa.getSelectedRow();
+            AtletaModel atleta = tableModelPesquisa.getAtleta(linha);
+            String nome_atleta = atleta.getNome();
+            manager.delete(atleta);
+            tableModelPesquisa.removerAtleta(linha);
+            JOptionPane.showMessageDialog(this, "Atleta '" + nome_atleta + "' foi excluido.", "Pronto", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -432,108 +554,7 @@ public class Cadastro extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    protected void actionIncluir() {
-        editingProcedure(true, true, false, true, 1, editNome);
-    }
-    
-    protected void actionEditar() {
-        if (tablePesquisa.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione uma linha, primeiro.", "Espere!", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
         
-        AtletaModel atleta = tableModelPesquisa.getAtleta(tablePesquisa.getSelectedRow());
-        
-        editId.setText(String.valueOf(atleta.getId()));
-        editNome.setText(atleta.getNome());
-        editDataNasc.setDate(atleta.getData_nasc());
-        editPeso.setValue(atleta.getPeso());
-        radioMasc.setSelected(atleta.getSexo() == 'M');
-        radioFem.setSelected(atleta.getSexo() == 'F');
-        checkboxKimono.setSelected(atleta.isKimono());
-        radioLiso.setSelected(atleta.getTipo_kimono() == 'L');
-        radioTrancado.setSelected(atleta.getTipo_kimono() == 'T');
-        editAcademia.setText(atleta.getAcademia());
-        comboFaixa.setSelectedItem(atleta.getFaixa());
-        comboCatIdade.setSelectedItem(atleta.getCategoria_idade());
-        comboCatPeso.setSelectedItem(atleta.getCategoria_peso());
-        
-        editingProcedure(true, true, true, true, 1, editNome);
-    }
-    
-    protected void actionSalvar() {
-        AtletasDataManager manager = new AtletasDataManager();
-        
-        if (parent.editing) {
-            
-            AtletaModel example = new AtletaModel(Long.parseLong(editId.getText()));
-            AtletaModel atleta = new AtletaModel();
-            
-            atleta.setNome(editNome.getText());
-            atleta.setData_nasc(editDataNasc.getDate());
-            atleta.setPeso(Double.valueOf(editPeso.getValue().toString()));
-            atleta.setSexo(radioMasc.isSelected() ? 'M' : 'F');
-            atleta.setKimono(checkboxKimono.isSelected());
-            atleta.setTipo_kimono(radioLiso.isSelected() ? 'L' : 'T');
-            atleta.setAcademia(editAcademia.getText());
-            atleta.setFaixa(comboFaixa.getSelectedItem().toString());
-            atleta.setCategoria_idade(comboCatIdade.getSelectedItem().toString());
-            atleta.setCategoria_peso(comboCatPeso.getSelectedItem().toString());
-            
-            manager.update(example, atleta);
-            
-            parent.editing = false;            
-        } else {
-            AtletaModel atleta = new AtletaModel(manager.getLastID() + 1);
-        
-            atleta.setNome(editNome.getText());
-            atleta.setData_nasc(editDataNasc.getDate());
-            atleta.setPeso(Double.valueOf(editPeso.getValue().toString()));
-            atleta.setSexo(radioMasc.isSelected() ? 'M' : 'F');
-            atleta.setKimono(checkboxKimono.isSelected());
-            atleta.setTipo_kimono(radioLiso.isSelected() ? 'L' : 'T');
-            atleta.setAcademia(editAcademia.getText());
-            atleta.setFaixa(comboFaixa.getSelectedItem().toString());
-            atleta.setCategoria_idade(comboCatIdade.getSelectedItem().toString());
-            atleta.setCategoria_peso(comboCatPeso.getSelectedItem().toString());
-            
-            manager.store(atleta);
-        }       
-        
-        JOptionPane.showMessageDialog(this, "Atleta '" + editNome.getText() + "' salvo.", "Informação", JOptionPane.INFORMATION_MESSAGE);
-        
-        filterTable(editPesquisa.getText());
-        
-        clearFieldsCadastro();
-        
-        editingProcedure(false, false, false, true, 0, editPesquisa);
-    }
-    
-    protected void actionCancelar() {
-        clearFieldsCadastro();
-        editingProcedure(false, false, false, true, 0, editPesquisa);
-    }
-    
-    protected void actionExcluir() {
-        if (tablePesquisa.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Selecione uma linha, primeiro!", "Ei...", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        
-        int resposta = JOptionPane.showConfirmDialog(this, "Deseja mesmo excluir o atleta '" + editNome.getText() + "'?", "Atenção", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        
-        if (resposta == JOptionPane.YES_OPTION) {
-            AtletasDataManager manager = new AtletasDataManager();            
-            int linha = tablePesquisa.getSelectedRow();
-            AtletaModel atleta = tableModelPesquisa.getAtleta(linha);
-            String nome_atleta = atleta.getNome();
-            manager.delete(atleta);
-            tableModelPesquisa.removerAtleta(linha);
-            JOptionPane.showMessageDialog(this, "Atleta '" + nome_atleta + "' foi excluido.", "Pronto", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-    
     private void checkTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTodosActionPerformed
         AtletasDataManager manager = new AtletasDataManager();
         tableModelPesquisa.addAll(manager.getAll());
@@ -604,21 +625,7 @@ public class Cadastro extends javax.swing.JPanel {
     private javax.swing.JTabbedPane tabCadastro1;
     private javax.swing.JTable tablePesquisa;
     // End of variables declaration//GEN-END:variables
-
-    protected void preConfigure() {
-        evaluateCombosPesquisa();        
-        tablePesquisa.setModel(tableModelPesquisa);
         
-        editPesquisa.requestFocus();
-        changeInterfaceCadastro(false);
-        parent.changeMainButtons(false);
-
-        buttonFiltrar.setEnabled(false);
-
-        ToolTipManager.sharedInstance().setDismissDelay(60000);
-        formatTableAtletasCadastro();
-    }
-    
     private void editingProcedure(boolean interf, boolean cadbtn, boolean editing, boolean changetab, int tabindex, Component toFocus) {
         changeInterfaceCadastro(interf);
         parent.changeMainButtons(cadbtn);

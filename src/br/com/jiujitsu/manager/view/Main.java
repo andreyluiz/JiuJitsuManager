@@ -11,6 +11,7 @@ public class Main extends JFrame {
     protected boolean editing;
     private Cadastro cadastro = new Cadastro(this);
     private Chaveamento chaveamento = new Chaveamento(this);
+    private Lutas lutas = new Lutas(this);
     
     /**
      * Creates new form Main
@@ -18,6 +19,33 @@ public class Main extends JFrame {
     public Main() {
         initComponents();
         preConfigure(tabPanels.getSelectedIndex());
+    }
+    
+    private void preConfigure(int tabIndex) {
+        this.setLocationRelativeTo(null);
+        
+        switch (tabIndex) {
+            case 0:
+                if (!cadastro.isValid()) {
+                    cadastro.preConfigure();
+                    cadastro.setBounds(0, 0, 999, 643);
+                    tabCadastro.add(cadastro);
+                    cadastro.setVisible(true);
+                }
+                break;
+            case 1:
+                if (!chaveamento.isValid()) {
+                    chaveamento.preConfigure();
+                    chaveamento.setBounds(0, 0, 999, 643);
+                    tabChaveamento.add(chaveamento);
+                    chaveamento.setVisible(true);
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;           
+        }
     }
             
     /**
@@ -41,17 +69,6 @@ public class Main extends JFrame {
         tabCadastro = new javax.swing.JPanel();
         tabChaveamento = new javax.swing.JPanel();
         tabLutas = new javax.swing.JPanel();
-        panelChaveamento = new javax.swing.JPanel();
-        panelProcurar_Cha = new javax.swing.JPanel();
-        buttonOK_Cha = new javax.swing.JButton();
-        comboCategoria = new javax.swing.JComboBox();
-        panelProxLutas = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableProxLutas = new javax.swing.JTable();
-        buttonIniciarLuta = new javax.swing.JButton();
-        panelVencedores = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableVencedores = new javax.swing.JTable();
         tabRelatorios = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -173,153 +190,15 @@ public class Main extends JFrame {
 
         tabPanels.addTab("Chaveamento", tabChaveamento);
 
-        panelChaveamento.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        panelProcurar_Cha.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Procurar por Categoria", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-        panelProcurar_Cha.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        buttonOK_Cha.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        buttonOK_Cha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/tick.png"))); // NOI18N
-        buttonOK_Cha.setText("OK");
-
-        comboCategoria.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        javax.swing.GroupLayout panelProcurar_ChaLayout = new javax.swing.GroupLayout(panelProcurar_Cha);
-        panelProcurar_Cha.setLayout(panelProcurar_ChaLayout);
-        panelProcurar_ChaLayout.setHorizontalGroup(
-            panelProcurar_ChaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProcurar_ChaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(comboCategoria, 0, 192, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonOK_Cha)
-                .addContainerGap())
-        );
-        panelProcurar_ChaLayout.setVerticalGroup(
-            panelProcurar_ChaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProcurar_ChaLayout.createSequentialGroup()
-                .addGroup(panelProcurar_ChaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelProcurar_ChaLayout.createSequentialGroup()
-                        .addComponent(buttonOK_Cha, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(comboCategoria))
-                .addContainerGap())
-        );
-
-        panelProxLutas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Próximas Lutas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-        panelProxLutas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        jScrollPane1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        tableProxLutas.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tableProxLutas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tableProxLutas);
-
-        buttonIniciarLuta.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        buttonIniciarLuta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/jiujitsu/manager/view/imagens/forward.png"))); // NOI18N
-        buttonIniciarLuta.setText("Iniciar Luta");
-
-        javax.swing.GroupLayout panelProxLutasLayout = new javax.swing.GroupLayout(panelProxLutas);
-        panelProxLutas.setLayout(panelProxLutasLayout);
-        panelProxLutasLayout.setHorizontalGroup(
-            panelProxLutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProxLutasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProxLutasLayout.createSequentialGroup()
-                .addContainerGap(398, Short.MAX_VALUE)
-                .addComponent(buttonIniciarLuta)
-                .addGap(388, 388, 388))
-        );
-        panelProxLutasLayout.setVerticalGroup(
-            panelProxLutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProxLutasLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonIniciarLuta)
-                .addContainerGap())
-        );
-
-        panelVencedores.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vencedores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 12))); // NOI18N
-
-        jScrollPane3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-
-        tableVencedores.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        tableVencedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane3.setViewportView(tableVencedores);
-
-        javax.swing.GroupLayout panelVencedoresLayout = new javax.swing.GroupLayout(panelVencedores);
-        panelVencedores.setLayout(panelVencedoresLayout);
-        panelVencedoresLayout.setHorizontalGroup(
-            panelVencedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelVencedoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelVencedoresLayout.setVerticalGroup(
-            panelVencedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVencedoresLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout panelChaveamentoLayout = new javax.swing.GroupLayout(panelChaveamento);
-        panelChaveamento.setLayout(panelChaveamentoLayout);
-        panelChaveamentoLayout.setHorizontalGroup(
-            panelChaveamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelChaveamentoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelChaveamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelVencedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelProxLutas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelChaveamentoLayout.createSequentialGroup()
-                        .addComponent(panelProcurar_Cha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        panelChaveamentoLayout.setVerticalGroup(
-            panelChaveamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelChaveamentoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelProcurar_Cha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelProxLutas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelVencedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout tabLutasLayout = new javax.swing.GroupLayout(tabLutas);
         tabLutas.setLayout(tabLutasLayout);
         tabLutasLayout.setHorizontalGroup(
             tabLutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabLutasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelChaveamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 999, Short.MAX_VALUE)
         );
         tabLutasLayout.setVerticalGroup(
             tabLutasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabLutasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelChaveamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 643, Short.MAX_VALUE)
         );
 
         tabPanels.addTab("Lutas", tabLutas);
@@ -368,7 +247,7 @@ public class Main extends JFrame {
             case 0:
                 cadastro.actionIncluir();
                 break;
-            case 1:
+            case 1:                
                 break;
             case 2:
                 break;
@@ -473,54 +352,16 @@ public class Main extends JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton buttonIncluir;
-    private javax.swing.JButton buttonIniciarLuta;
-    private javax.swing.JButton buttonOK_Cha;
     private javax.swing.JButton buttonSalvar;
-    private javax.swing.JComboBox comboCategoria;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPanel panelButtons;
-    private javax.swing.JPanel panelChaveamento;
-    private javax.swing.JPanel panelProcurar_Cha;
-    private javax.swing.JPanel panelProxLutas;
-    private javax.swing.JPanel panelVencedores;
     private javax.swing.JPanel tabCadastro;
     private javax.swing.JPanel tabChaveamento;
     private javax.swing.JPanel tabLutas;
     private javax.swing.JTabbedPane tabPanels;
     private javax.swing.JPanel tabRelatorios;
-    private javax.swing.JTable tableProxLutas;
-    private javax.swing.JTable tableVencedores;
     // End of variables declaration//GEN-END:variables
     //</editor-fold>
-    
-    private void preConfigure(int tabIndex) {
-        this.setLocationRelativeTo(null);
-        
-        switch (tabIndex) {
-            case 0:
-                if (!cadastro.isValid()) {
-                    cadastro.preConfigure();
-                    cadastro.setBounds(0, 0, 999, 643);
-                    tabCadastro.add(cadastro);
-                    cadastro.setVisible(true);
-                }
-                break;
-            case 1:
-                if (!chaveamento.isValid()) {
-                    chaveamento.preConfigure();
-                    chaveamento.setBounds(0, 0, 999, 643);
-                    tabChaveamento.add(chaveamento);
-                    chaveamento.setVisible(true);
-                }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;           
-        }
-    }
-    
+            
     protected void changeMainButtons(boolean editing) {
         buttonIncluir.setEnabled(!editing);
         buttonEditar.setEnabled(!editing);
